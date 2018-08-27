@@ -108,6 +108,8 @@ public class PostController {
         commentRepository.deleteById(commentId);
     }
 
+
+
     @ResponseBody
     @GetMapping(value = "/list", produces = "application/json")
     public PostGrid showPosts(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
@@ -134,5 +136,11 @@ public class PostController {
         postGrid.setPostsData(postPage.stream().collect(Collectors.toList()));
 
         return postGrid;
+    }
+
+    @RequestMapping(value = "/list/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBook(@PathVariable("id") int id) {
+        postRepository.deleteById(id);
     }
 }

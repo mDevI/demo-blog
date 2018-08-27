@@ -38,6 +38,25 @@
 
         var link = /*[[@{/posts/list/}]]*/ '/posts/list/';
         var editlink = /*[[@{/posts/}]]*/ '/posts/';
+
+        $.extend($.jgrid.edit, {
+            closeAfterEdit: true,
+            closeAfterAdd: true,
+            ajaxEditOptions: { contentType: "application/json" },
+            mtype: 'PUT',
+            serializeEditData: function(data) {
+                delete data.oper;
+                return JSON.stringify(data);
+            }
+        });
+        $.extend($.jgrid.del, {
+            mtype: 'DELETE',
+            serializeDelData: function() {
+                return "";
+            }
+        });
+
+
         jQuery(document).ready(function() {
                 "use strict";
                 $("#list").jqGrid({
@@ -100,9 +119,9 @@
 
 
 
-            $.extend($.jgrid.edit, {
+/*            $.extend($.jgrid.edit, {
                 ajaxEditOptions: { contentType: "application/json" }
-            });
+            });*/
 
             $("#list").jqGrid('navGrid','#pager', { edit:true,add:true,del:true, search: false},
                 { mtype: "PUT" },   // Edit options
