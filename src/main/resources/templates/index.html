@@ -7,7 +7,6 @@
 
     <title>The Ajax Web UI APP</title>
 
-
     <link rel="stylesheet" crossorigin="anonymous"
           href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha256-zVUlvIh3NEZRYa9X/qpNY8P1aBy0d4FrI7bhfZSZVwc=">
@@ -26,112 +25,12 @@
     <script crossorigin="anonymous"
             src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/js/bootstrap.min.js"
             integrity="sha256-IeI0loa35pfuDxqZbGhQUiZmD2Cywv1/bdqiypGW46o="></script>
-    <script>
-        $.jgrid = $.jgrid || {};
-        $.jgrid.no_legacy_api = true;
-    </script>
+
     <script crossorigin="anonymous"
             src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.4/jquery.jqgrid.min.js"
             integrity="sha256-GN28v8v0UEhIeH35OHeGh9LoP5liiKMRbiIFVQ5flTo="></script>
 
-    <script  th:inline="javascript" type="text/javascript">
-
-        var link = /*[[@{/posts/list/}]]*/ '/posts/list/';
-        var editlink = /*[[@{/posts/}]]*/ '/posts/';
-
-        $.extend($.jgrid.edit, {
-            closeAfterEdit: true,
-            closeAfterAdd: true,
-            ajaxEditOptions: { contentType: "application/json" },
-            mtype: 'PUT',
-            serializeEditData: function(data) {
-                delete data.oper;
-                return JSON.stringify(data);
-            }
-        });
-        $.extend($.jgrid.del, {
-            mtype: 'DELETE',
-            serializeDelData: function() {
-                return "";
-            }
-        });
-
-
-        jQuery(document).ready(function() {
-                "use strict";
-                $("#list").jqGrid({
-                    url: link,
-                    editurl: editlink,
-                    datatype: 'json',
-                    mtype: 'GET',
-                    colNames: ['ID', 'TITLE',
-                        'CONTENT'],
-                    colModel: [
-                        {
-                            label: 'Post ID',
-                            name: 'id',
-                            key: true,
-                            formatter:'integer',
-                            editable: true,
-                            index: 'id',
-                            editoptions: {disabled: true, size:5},
-                            width: 50
-                        },
-                        {
-                            label: 'Title',
-                            name: 'title',
-                            index: 'title',
-                            editable: true,
-                            editrules: {required: true},
-                            width: 300
-                        },
-                        {
-                            label: 'Content',
-                            name: 'content',
-                            index: 'content',
-                            editable: true,
-                            editrules: {required: true},
-                            width: 600
-                        }
-                    ],
-                    jsonReader: {
-                        root: "postsData",
-                        page: "currentPage",
-                        total: "totalPages",
-                        records: "totalRecords",
-                        repeatitems: false,
-                        id: "id"
-                    },
-                    pager: '#pager',
-                    rowNum: 10, rowList: [10, 20, 30],
-                    guiStyle: "bootstrap4",
-                    iconSet: "fontAwesome",
-                    loadonce: false,
-                    sortname: 'id',
-                    sortorder: 'asc',
-                    viewrecords: true,
-                    gridview: true,
-                    height: 'auto',
-/*                    width: 'auto',*/
-                    caption: 'The Persons'
-                });
-/*            $('#list').jqGrid('navGrid','#pager');*/
-
-
-
-/*            $.extend($.jgrid.edit, {
-                ajaxEditOptions: { contentType: "application/json" }
-            });*/
-
-            $("#list").jqGrid('navGrid','#pager', { edit:true,add:true,del:true, search: false},
-                { mtype: "PUT" },   // Edit options
-                { mtype: "POST" }, // Add options
-                { mtype: "DELETE" }); // Del option
-
-
-
-        });
-    </script>
+    <script type="text/javascript" th:src="@{js/main.js}"  ></script>
 
 </head>
 <body>
@@ -171,7 +70,6 @@
 </nav>
 <div class="container">
     <h2>Hello World</h2>
-
     <p>
         This is a simple page.
     </p>
@@ -185,10 +83,5 @@
     </div>
     <div id="pager"></div>
 </div>
-
-
-
-
-
 </body>
 </html>
